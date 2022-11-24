@@ -99,7 +99,6 @@ if (process.env.APP_CONN == "https") {
 	});
 
 	if (process.env.ENABLE_WEBSOCKET) {
-		APP.listen(PORT, () => console.log(`app listening on port ${PORT}!`));
         let wss = new WebSocket({ server: server});
 			wss.on('connection', (ws) => {
 				let metaData = null;
@@ -160,6 +159,6 @@ if (process.env.APP_CONN == "https") {
 			};
 	}
 } else {
-	
+	APP.listen(PORT, () => console.log(`app listening on port ${PORT}!`));
 }
 
