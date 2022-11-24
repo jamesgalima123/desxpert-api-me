@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const EXPRESS = require('express');
 const APP = EXPRESS();
-const PORT = process.env.APP_PORT;
 const SOCKET_PORT = process.env.SOCKET_PORT;
 const WebSocket = require('ws').Server;
 const CORS = require('cors');
@@ -93,6 +92,7 @@ if (process.env.APP_CONN == "https") {
 	};
 	
 	var server = https.createServer(credentials, APP);
+	console.log(`Server is listening on port ${PORT}`)
 	server.listen(process.env.PORT || 5300, () => {
 	  console.log("https server starting on port : " + port)
 	});
