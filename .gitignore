@@ -1,0 +1,14 @@
+# package directories
+node_modules
+#migration config
+/config/config.json
+# Serverless directories 
+.serverless
+.env
+# YML
+serverless.yml
+#
+.vs
+/uploads
+/bookings
+run.bat
