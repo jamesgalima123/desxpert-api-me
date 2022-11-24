@@ -3,6 +3,7 @@ require('dotenv').config();
 const EXPRESS = require('express');
 const APP = EXPRESS();
 const PORT = process.env.APP_PORT;
+console.log("the port " + PORT);
 const SOCKET_PORT = process.env.SOCKET_PORT;
 const WebSocket = require('ws').Server;
 const CORS = require('cors');
