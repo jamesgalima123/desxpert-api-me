@@ -158,6 +158,6 @@ if (process.env.APP_CONN == "https") {
 			};
 	}
 } else {
-	APP.listen(PORT, () => console.log(`app listening on port ${PORT}!`));
+	APP.listen(process.env.PORT, () => console.log(`app listening on port !` + process.env.PORT));
 }
 
