@@ -4,7 +4,7 @@ node_modules
 /config/config.json
 # Serverless directories 
 .serverless
-
+.env
 # YML
 serverless.yml
 #
