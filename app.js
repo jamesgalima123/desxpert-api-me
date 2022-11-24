@@ -92,7 +92,7 @@ if (process.env.APP_CONN == "https") {
 	};
 	
 	var server = https.createServer(credentials, APP);
-	console.log(`Server is listening on port ${PORT}`)
+	console.log(`Server is listening on port ` + process.env.PORT);
 	server.listen(process.env.PORT || 5300, () => {
 	  console.log("https server starting on port : " + port)
 	});
