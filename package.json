@@ -38,10 +38,10 @@
     "serverless-http": "^3.0.1",
     "socket.io": "^4.5.3",
     "uuid": "^9.0.0",
-    "validatorjs": "^3.22.1"
+    "validatorjs": "^3.22.1",
+    "nodemon": "^2.0.19"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19",
     "serverless-offline": "^8.8.0",
     "serverless-s3-local": "^0.6.22",
     "serverless-webpack": "^5.7.0"
