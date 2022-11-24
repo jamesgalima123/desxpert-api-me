@@ -93,10 +93,9 @@ if (process.env.APP_CONN == "https") {
 	};
 	
 	var server = https.createServer(credentials, APP);
-	const host = '0.0.0.0';
 	const port = process.env.PORT || 3000;
-	server.listen(port,host, () => {
-	  console.log("https server starting on port : " + PORT)
+	server.listen(port, () => {
+	  console.log("https server starting on port : " + port)
 	});
 
 	if (process.env.ENABLE_WEBSOCKET) {
