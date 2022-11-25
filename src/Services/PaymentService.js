@@ -2,7 +2,6 @@
 const request = require ("request");
 const { promises } = require("nodemailer/lib/xoauth2");
 const e = require("express");
-const { resolve } = require("styled-jsx/css");
 class PaymentService {
 
     async paymentHook(req) {
