@@ -89,7 +89,7 @@ class BookingService {
                     let client_user_profile = await USER_PROFILE.get({user_id:body.user_id});
                     const payload = {first_name:user_profile.first_name,uuid:booking.uuid, professional_uuid:user.uuid , client_first_name:client_user_profile.first_name,
                          client_last_name: client_user_profile.last_name, concern:body.concern};
-                    await EMAIL_SERVICE.sendBookingProfessionalNotification(user.email,payload);
+                    //await EMAIL_SERVICE.sendBookingProfessionalNotification(user.email,payload);
                     message = "Booking has been created";
                 },1000 * index);
             });

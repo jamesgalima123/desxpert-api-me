@@ -44,11 +44,11 @@ class ContractService {
         let params = req.params;
         try {
             let user = await USER.get( {uuid:params.uuid} );
-            let contract = await CONTRACT.get( {client_id:user.id} );
+            let contract = await CONTRACT.get( {client_id:user.id,status:'inprogress'} );
             if(!contract){
                 return { status: 404,message:'Contract does not exist' };
             }
-            return { status: 200,contract:contract };
+            return { status: 200,data:contract };
 
         } catch (err) {
             return { status: 500, message: toString(err) };
