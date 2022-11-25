@@ -10,13 +10,14 @@
     "drop": "npx sequelize-cli db:drop",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx sequelize-cli db:seed:all",
-    "start":"nodemon"
+    "start": "nodemon"
   },
   "author": "Joshua Fradejas",
   "license": "ISC",
   "dependencies": {
     "api": "^4.4.0",
     "aws-sdk": "^2.1139.0",
+    "axios": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
@@ -32,14 +33,14 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.19",
     "pm2": "^5.2.0",
     "sequelize": "^6.19.0",
     "serverless": "^3.18.0",
     "serverless-http": "^3.0.1",
     "socket.io": "^4.5.3",
     "uuid": "^9.0.0",
-    "validatorjs": "^3.22.1",
-    "nodemon": "^2.0.19"
+    "validatorjs": "^3.22.1"
   },
   "devDependencies": {
     "serverless-offline": "^8.8.0",

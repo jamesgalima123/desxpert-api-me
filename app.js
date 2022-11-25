@@ -19,6 +19,7 @@ const USER = require('./src/Handlers/User.js');
 const USER_PICTURES = require('./src/Handlers/UserPictures.js');
 const VERIFICATION = require('./src/Handlers/Verification.js');
 const REQUEST_LINK = require('./src/Handlers/RequestLink.js');
+const PAYMENT = require('./src/Handlers/Payment.js');
 const TAGLINE = require('./src/Handlers/Tagline.js');
 const SCHEDULE = require('./src/Handlers/Schedule.js');
 const ImageDataURI = require('image-data-uri');
@@ -50,6 +51,8 @@ APP.all('/contracts', CONTRACT);
 
 APP.all('/schedules/*', SCHEDULE);
 
+APP.all('/payment/*', PAYMENT);
+APP.all('/payment', PAYMENT);
 
 APP.all('/professions/*', PROFESSION);
 APP.all('/professions', PROFESSION);
@@ -158,6 +161,7 @@ if (process.env.APP_CONN == "https") {
 			};
 	}
 } else {
-	APP.listen(process.env.PORT, () => console.log(`app listening on port !` + process.env.PORT));
+	let port = process.env.PORT || process.env.APP_PORT;
+	APP.listen(port, () => console.log(`app listening on port ` + port));
 }
 
