@@ -6,6 +6,7 @@ class PaymentService {
 
     async paymentHook(req) {
         let body = req.body;
+        console.log(body);
         try {
             
             let type = body.data.attributes.type;
@@ -33,7 +34,6 @@ class PaymentService {
                         }
                       });
                 });
-                console.log(response);
                 return {status:200,message:response};
 
           
