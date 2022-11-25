@@ -1,9 +1,11 @@
 "use strict"
 const request = require ("request");
 const { promises } = require("nodemailer/lib/xoauth2");
+const e = require("express");
+const { resolve } = require("styled-jsx/css");
 class PaymentService {
 
-    async gcash(req) {
+    async paymentHook(req) {
         let body = req.body;
         try {
             
@@ -18,18 +20,26 @@ class PaymentService {
                     "Authorization":"Basic c2tfdGVzdF9TbzR2OFpkbmNEV2YxRmRyQjJqbms4eHA6",
                     "Content-Type":"application/json"
                 };
-                request.post({
-                    headers: headers,
-                    url:     'https://api.paymongo.com/v1/payments',
-                    body: JSON.stringify(fields)
-                  }, function(error, response, body){
-                    console.log(body);
-                  });
-                
-            
+                let response = await new Promise((resolve,reject)=>{
+                    request.post({
+                        headers: headers,
+                        url:     'https://api.paymongo.com/v1/payments',
+                        body: JSON.stringify(fields)
+                      }, function(error, response, body){
+                        if(error){
+                            return reject(error);
+                        }
+                        if(body){
+                            return resolve(body);
+                        }
+                      });
+                });
+                console.log(response);
+                return {status:200,message:response};
+
           
             }
-            return {status:200,message:'success'};
+            return {status:200,message:'???'};
         }catch(err){
             return {status:500,message:toString(err)};
         }

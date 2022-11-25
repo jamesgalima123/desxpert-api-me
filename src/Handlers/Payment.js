@@ -12,7 +12,7 @@ ROUTER_MIDDLEWARE.useStandard(ROUTE);
 APP.use(EXPRESS.json({ strict: false }))
     .use(EXPRESS.urlencoded({ extended: true }))
 
-ROUTE.post('/payment/gcash',  PAYMENT_CONTROLLER.gcash);
+ROUTE.post('/payment/web-hook',  PAYMENT_CONTROLLER.paymentHook);
 
 module.exports = ROUTE;
   
