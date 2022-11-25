@@ -6,7 +6,7 @@ class PaymentService {
 
     async paymentHook(req) {
         let body = req.body;
-        console.log(body);
+        console.log(JSON.stringify(body));
         try {
             
             let type = body.data.attributes.type;
