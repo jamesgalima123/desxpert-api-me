@@ -13,6 +13,7 @@ APP.use(EXPRESS.json({ strict: false }))
     .use(EXPRESS.urlencoded({ extended: true }))
 
 ROUTE.post('/payment/web-hook',  PAYMENT_CONTROLLER.paymentHook);
+ROUTE.post('/payment/get-ewallet-payment/:type',  PAYMENT_CONTROLLER.getEwalletPayment);
 
 module.exports = ROUTE;
   

@@ -13,4 +13,5 @@ ROUTER_MIDDLEWARE.useAuthenticated(ROUTE);
 APP.use(EXPRESS.json({ strict: false }))
 	.use(EXPRESS.urlencoded({ extended: true }))
 ROUTE.post('/contracts/create-contract', VALIDATION_MIDDLEWARE.createContract, CONTRACT_CONTROLLER.createContract);
+ROUTE.get('/contracts/get-contract', CONTRACT_CONTROLLER.getContract);
 module.exports = ROUTE;

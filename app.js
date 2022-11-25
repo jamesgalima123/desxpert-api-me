@@ -78,7 +78,7 @@ APP.all('/users/*', USER);
 APP.all('/users', USER);
 
 APP.use(EXPRESS.static(__dirname, { dotfiles: 'allow' } ));
-
+let wss = null;
 if (process.env.APP_CONN == "https") {
 	
 	const https = require('https');
@@ -101,67 +101,69 @@ if (process.env.APP_CONN == "https") {
 	});
 
 	if (process.env.ENABLE_WEBSOCKET) {
-        let wss = new WebSocket({ server: server});
-			wss.on('connection', (ws) => {
-				let metaData = null;
-				let ret = {status:200,message:"connected"};
-				ws.send(JSON.stringify(ret));
-				ws.on('message', async (messageAsString) => {
-					const body = JSON.parse(messageAsString);
-		
-					if(!metaData && body.type === 'client'){
-						metaData = { booking_uuid:body.booking_uuid, proposals:[],type:"client" };
-						clients.set(ws,metaData);
-						sendMessage(ws,metaData);
-					}else if(body.type === 'client'){
-						sendMessage(ws,metaData);
-					}else if(!metaData && body.type === 'professional'){
-						metaData = { booking_uuid:body.booking_uuid, proposals:[],type:"client" };
-						clients.forEach((client,key)=>{
-							let isEmpty = true;
-							if(client.booking_uuid === body.booking_uuid){
-								isEmpty = false;
-								let insert = true;
-								client.proposals.forEach((proposal,proposal_key)=>{
-									if(proposal.proposal_uuid === body.proposal.proposal_uuid){
-										insert = false;
-									}
-								});
-								let message = "";
-								if(insert){
-									client.proposals[client.proposals.length] = body.proposal;
-									message = {status:200,message:"You have sent your proposal"};
-								}else{
-									message = {status:200,message:"You have an existing proposal"};
-								}
-								
-								ws.send(JSON.stringify(message));
-							}else if(isEmpty){
-								message = {status:4043,message:"Booking does not exist"};
-								ws.send(JSON.stringify(message));			
-							}
-						});
-		
-						if(clients.size == 0){
-							message = {status:4044,message:"Booking does not exist"};
-							ws.send(JSON.stringify(message));	
-						}
-					}
-					
-				});
-				ws.on('close', async (messageAsString) => {
-					console.log("disconnected ");
-					
-				});
-			});
-			const sendMessage = async(ws,metaData)=>{
-				if(metaData){
-					ws.send(JSON.stringify(metaData));
-				}
-			};
+        wss = new WebSocket({ server: server});
 	}
 } else {
+	wss = new WebSocket({ port: 5200});
 	let port = process.env.PORT || process.env.APP_PORT;
 	APP.listen(port, () => console.log(`app listening on port ` + port));
 }
+
+wss.on('connection', (ws) => {
+	let metaData = null;
+	let ret = {status:200,message:"connected"};
+	ws.send(JSON.stringify(ret));
+	ws.on('message', async (messageAsString) => {
+		const body = JSON.parse(messageAsString);
+
+		if(!metaData && body.type === 'client'){
+			metaData = { booking_uuid:body.booking_uuid, proposals:[],type:"client" };
+			clients.set(ws,metaData);
+			sendMessage(ws,metaData);
+		}else if(body.type === 'client'){
+			sendMessage(ws,metaData);
+		}else if(!metaData && body.type === 'professional'){
+			metaData = { booking_uuid:body.booking_uuid, proposals:[],type:"client" };
+			clients.forEach((client,key)=>{
+				let isEmpty = true;
+				if(client.booking_uuid === body.booking_uuid){
+					isEmpty = false;
+					let insert = true;
+					client.proposals.forEach((proposal,proposal_key)=>{
+						if(proposal.proposal_uuid === body.proposal.proposal_uuid){
+							insert = false;
+						}
+					});
+					let message = "";
+					if(insert){
+						client.proposals[client.proposals.length] = body.proposal;
+						message = {status:200,message:"You have sent your proposal"};
+					}else{
+						message = {status:200,message:"You have an existing proposal"};
+					}
+					
+					ws.send(JSON.stringify(message));
+				}else if(isEmpty){
+					message = {status:4043,message:"Booking does not exist"};
+					ws.send(JSON.stringify(message));			
+				}
+			});
+
+			if(clients.size == 0){
+				message = {status:4044,message:"Booking does not exist"};
+				ws.send(JSON.stringify(message));	
+			}
+		}
+		
+	});
+	ws.on('close', async (messageAsString) => {
+		console.log("disconnected ");
+		
+	});
+});
+const sendMessage = async(ws,metaData)=>{
+	if(metaData){
+		ws.send(JSON.stringify(metaData));
+	}
+};
 

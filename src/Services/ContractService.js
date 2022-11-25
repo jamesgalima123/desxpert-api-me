@@ -31,9 +31,24 @@ class ContractService {
             }
             const uuid = UUID_V4();
             body.uuid = uuid;
-            await CONTRACT.create({ client_id:body.client_id, professional_id:proposal.professional_id, uuid:body.uuid, proposal_id:proposal.id, booking_id:booking.id });
+            let contract = await CONTRACT.create({ client_id:body.client_id, professional_id:proposal.professional_id, uuid:body.uuid, proposal_id:proposal.id, booking_id:booking.id });
             BOOKING.update({ status:"accepted" },{ uuid:proposal.booking_uuid });
-            return { status: 200, message:"Contract has been created" };
+            return { status: 200, message:"Contract has been created",data:contract };
+
+        } catch (err) {
+            return { status: 500, message: toString(err) };
+        }
+
+    }
+    async getContract(req) {
+        let params = req.params;
+        try {
+            let user = await USER.get( {uuid:params.uuid} );
+            let contract = await CONTRACT.get( {client_id:user.id} );
+            if(!contract){
+                return { status: 404,message:'Contract does not exist' };
+            }
+            return { status: 200,contract:contract };
 
         } catch (err) {
             return { status: 500, message: toString(err) };

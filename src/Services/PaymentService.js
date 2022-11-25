@@ -38,7 +38,23 @@ class PaymentService {
 
           
             }
-            return {status:200,message:'???'};
+            return {status:404,message:'Event type does not exist'};
+        }catch(err){
+            return {status:500,message:toString(err)};
+        }
+        
+    }
+    async getEwalletPayment(req) {
+        let body = req.body;
+        let params = req.params;
+        try {
+            let type = params.type;
+            if(type === 'gcash'){
+                console.log(type);
+
+                return {status:200,message:'success'};
+            }
+            return {status:200,message:'E wallet does not exist'};
         }catch(err){
             return {status:500,message:toString(err)};
         }
